@@ -5,7 +5,8 @@ dist/
 docs/
 .vscode/
 .venv/
-
+.idea
+.idea/
 
 # === Default: https://github.com/github/gitignore/blob/master/Python.gitignore
 
@@ -46,6 +47,7 @@ MANIFEST
 # Installer logs
 pip-log.txt
 pip-delete-this-directory.txt
+poetry.lock
 
 # Unit test / coverage reports
 htmlcov/
