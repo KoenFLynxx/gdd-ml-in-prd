@@ -1,5 +1,6 @@
 import pandas as pd
 from pandas.testing import assert_series_equal
+import pytest
 
 from animal_shelter.features import (
     check_has_name,
@@ -7,11 +8,21 @@ from animal_shelter.features import (
     get_hair_type,
     get_neutered,
     compute_days_upon_outcome,
+    check_is_dog,
 )
 
 
 def test_is_dog():
-    assert 1 == 0  # TODO: Replace this.
+    a = pd.Series(["dog", "cat"])
+    result = check_is_dog(a)
+    expected = pd.Series([True, False])
+    assert_series_equal(result, expected)
+
+
+def test_is_dog_fails():
+    a = pd.Series(["fish"])
+    with pytest.raises(RuntimeError):
+        check_is_dog(a)
 
 
 def test_check_has_name():
