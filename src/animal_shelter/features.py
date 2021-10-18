@@ -14,16 +14,10 @@ def add_features(df):
         DataFrame with some column features added
     """
     df["is_dog"] = check_is_dog(df["animal_type"])
-
     df["has_name"] = check_has_name(df["name"])
-
-    sexuponoutcome = df["sex_upon_outcome"]
-    df["sex"] = get_sex(sexuponoutcome)
-
-    df["neutered"] = get_neutered(sexuponoutcome)
-
+    df["sex"] = get_sex(df["sex_upon_outcome"])
+    df["neutered"] = get_neutered(df["sex_upon_outcome"])
     df["hair_type"] = get_hair_type(df["breed"])
-
     df["days_upon_outcome"] = compute_days_upon_outcome(df["age_upon_outcome"])
 
     return df
