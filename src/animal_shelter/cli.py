@@ -2,8 +2,15 @@ import logging
 from pathlib import Path
 
 import typer
-import pandas as pd
-
+from animal_shelter.model import (
+    split_x_y,
+    fit_model,
+    save_model,
+    load_model,
+    predict_model,
+    save_results,
+)
+from animal_shelter.data import load_data
 
 app = typer.Typer()
 
@@ -24,13 +31,27 @@ def train(input_path: Path, model_path: Path) -> None:
     logger = logging.getLogger(__name__)
 
     logger.info("Loading input dataset from %s", input_path)
-    train_dataset = pd.read_csv(input_path)
+    train_dataset = load_data(input_path)
     logger.info("Found %i rows", len(train_dataset))
 
-    # TODO: Fill in your solution.
-    # - Separate X from y
-    # - Fit a model
-    # - Log the final score
-    # - Save model
+    x_train, x_val, y_train, y_val = split_x_y(train_dataset)
+    best_model, best_score = fit_model(x_train, y_train)
+    logger.info("Final score %f", best_score)
+    save_model(best_model, model_path)
 
     logger.info(f"Wrote model to {model_path}")
+
+
+@app.command()
+def predict(model_path: Path, data_path: Path, output_path: Path) -> None:
+    logger = logging.getLogger(__name__)
+
+    outcome_model = load_model(model_path)
+    logger.info(f"Loaded model to {model_path}")
+
+    test_data = load_data(data_path)
+
+    predictions = predict_model(outcome_model, test_data)
+
+    save_results(predictions, output_path)
+    logger.info(f"Wrote results to {output_path}")

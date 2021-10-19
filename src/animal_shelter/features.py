@@ -1,7 +1,8 @@
 import numpy as np
 import pandas as pd
 import logging
-logger = logging.getLogger('features')
+
+logger = logging.getLogger("features")
 
 
 def add_features(df_in: pd.DataFrame) -> pd.DataFrame:
@@ -41,7 +42,9 @@ def check_is_dog(animal_type: pd.Series) -> pd.Series:
     # Check if it's either a cat or a dog.
     is_cat_dog = animal_type.str.lower().isin(["dog", "cat"])
     if not is_cat_dog.all():
-        logger.info("Found something else but dogs and cats:\n%s", animal_type[~is_cat_dog])
+        logger.info(
+            "Found something else but dogs and cats:\n%s", animal_type[~is_cat_dog]
+        )
         # print("Found something else but dogs and cats:\n%s", animal_type[~is_cat_dog])
         # raise RuntimeError("Found pets that are not dogs or cats.")
     is_dog = animal_type.str.lower() == "dog"
