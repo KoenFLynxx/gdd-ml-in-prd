@@ -12,6 +12,7 @@ typer = {extras = ["all"], version = "^0.4.0"}
 fastapi = "^0.70.0"
 uvicorn = "^0.15.0"
 python-multipart = "^0.0.5"
+Jinja2 = "^3.0.2"
 
 [tool.poetry.dev-dependencies]
 notebook = "^6.4.4"

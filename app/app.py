@@ -3,6 +3,8 @@ from io import StringIO
 import joblib
 from fastapi import FastAPI, File, UploadFile
 from fastapi.responses import StreamingResponse
+from src.animal_shelter.model import predict_model, load_model
+from src.animal_shelter.data import load_data
 
 import pandas as pd
 
@@ -16,9 +18,10 @@ def ping():
 
 @app.post("/api/v1/predict/")
 def predict(file: UploadFile = File(...)):
-    input_data = pd.read_csv(file.file)
-    # TODO: Fill this in.
-    predictions = input_data
+    input_data = load_data(file.file)
+
+    model = load_model('output/trained_model.pkl')
+    predictions = predict_model(model, input_data)
     response = _convert_df_to_response(predictions)
     return response
 
