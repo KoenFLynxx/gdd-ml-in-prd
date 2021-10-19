@@ -43,7 +43,7 @@ def train(input_path: Path, model_path: Path) -> None:
 
 
 @app.command()
-def predict(model_path: Path, data_path: Path, output_path: Path) -> None:
+def predict(data_path: Path, output_path: Path, model_path: Path = 'output/trained_model.pkl') -> None:
     logger = logging.getLogger(__name__)
 
     outcome_model = load_model(model_path)
